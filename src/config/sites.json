@@ -1,0 +1,94 @@
+{
+  "sites": [
+    {
+      "name": "UniClo",
+      "base_url": "https://uniqlo.cknode.space/",
+      "urls": [
+        {
+          "url": "https://uniqlo.cknode.space/shop?categories=mens+watch&sort_by=recently_added",
+          "page_label": "Watches",
+          "max_pages": 1,
+          "pagination_strategy": "infinite_scroll",
+          "pagination_param": null,
+          "selectors": {
+            "price": {
+              "primary": "div[data-product-id] .price",
+              "fallback": ".product-price"
+            },
+            "sku": {
+              "primary": "div[data-product-id]",
+              "fallback": ".product-card",
+              "countMethod": "elements"
+            },
+            "messaging": {
+              "primary": "h1",
+              "fallback": "h2"
+            },
+            "pagination": {
+              "primary": "a[rel='next']",
+              "fallback": "button.load-more"
+            }
+          }
+        },
+        {
+          "url": "https://uniqlo.cknode.space/shop?sort_by=recently_added&categories=mens+sneakers%2Csunglasses",
+          "page_label": "Sneakers",
+          "max_pages": 1,
+          "pagination_strategy": "infinite_scroll",
+          "pagination_param": null,
+          "selectors": {
+            "price": {
+              "primary": ".price",
+              "fallback": "[data-price]"
+            },
+            "sku": {
+              "primary": "div[data-product-id]",
+              "fallback": ".product-card",
+              "countMethod": "elements"
+            },
+            "messaging": {
+              "primary": "h1",
+              "fallback": "h2"
+            },
+            "pagination": {
+              "primary": ".next",
+              "fallback": "button.more"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Rorono Zoro",
+      "base_url": "https://roronozoro.jdwebshop.com/",
+      "urls": [
+        {
+          "url": "https://roronozoro.jdwebshop.com/shop?sort_by=recently_added",
+          "page_label": "Shop",
+          "max_pages": 1,
+          "pagination_strategy": "infinite_scroll",
+          "pagination_param": null,
+          "selectors": {
+            "price": {
+              "primary": ".price",
+              "fallback": ".product-price"
+            },
+            "sku": {
+              "primary": ".product-card",
+              "fallback": "div[data-id]",
+              "countMethod": "elements"
+            },
+            "messaging": {
+              "primary": "h1.uppercase.text-\\[1\\.125rem\\].lg\\:text-\\[1rem\\].xl\\:text-\\[1\\.25rem\\].font-medium.text-center.line-clamp-1",
+              "fallback": "h1"
+            },
+            "pagination": {
+              "primary": "a.next",
+              "fallback": ".pagination a.next, button.more"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
