@@ -48,6 +48,8 @@ async def get_singleton_browser(use_proxy: bool = False) -> Browser:
             "--no-default-browser-check",
             "--disable-dev-shm-usage",
             "--disable-http2",
+            "--no-sandbox",
+            "--disable-setuid-sandbox",
         ]
         launch_options = {
             "headless": True,
