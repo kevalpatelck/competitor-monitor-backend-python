@@ -15,7 +15,7 @@ def diff_price(
     old_currency: Optional[str] = None,
     new_currency: Optional[str] = None
 ) -> Optional[Dict[str, Any]]:
-    # If either is missing, can't compare
+    # If either is missing, can't 
     if old_price is None or new_price is None:
         return None
 
