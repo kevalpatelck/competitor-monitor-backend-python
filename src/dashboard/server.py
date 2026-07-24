@@ -8,7 +8,7 @@ from urllib.parse import urlparse
 from fastapi import FastAPI, HTTPException, Header, Depends, BackgroundTasks, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.exceptions import RequestValidationError
-from fastapi.responses import JSONResponse, StreamingResponse
+from fastapi.responses import JSONResponse, StreamingResponse, FileResponse
 from pydantic import BaseModel
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
@@ -357,6 +357,19 @@ def get_data():
         },
         "sitesConfig": []
     }
+
+
+@app.get("/api/db/download")
+def download_database():
+    """Download the raw SQLite database file directly from the live server."""
+    db_file = Path(config["db_path"]).resolve()
+    if not db_file.exists():
+        raise HTTPException(status_code=404, detail="Database file not found.")
+    return FileResponse(
+        path=str(db_file),
+        filename="monitoring.db",
+        media_type="application/x-sqlite3"
+    )
 
 
 @app.post("/api/scan", dependencies=[Depends(verify_api_key)])
