@@ -375,6 +375,10 @@ async def run_scan(log_fn=None) -> Dict[str, Any]:
         traceback.print_exc()
     finally:
         await shutdown_browser()
+        try:
+            export_data()
+        except Exception as exp_err:
+            logger.error(f"[EXPORT ERROR] Failed to export database after scan: {exp_err}")
 
     elapsed = (datetime.datetime.now() - start_time).total_seconds()
     logger.info(f"\n========================================")
