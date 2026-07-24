@@ -301,6 +301,7 @@ def on_startup():
         logger.info("[DB] Initializing/migrating database on startup...")
         conn = init_database()
         conn.close()
+        export_data()
     except Exception as err:
         logger.error(f"[DB ERROR] Database initialization failed: {err}")
 
@@ -330,9 +331,32 @@ def on_shutdown():
 @app.get("/api/data", dependencies=[Depends(verify_api_key)])
 def get_data():
     current_data = read_data_json()
+    if not current_data:
+        try:
+            export_data()
+            current_data = read_data_json()
+        except Exception:
+            pass
     if current_data:
         return current_data
-    raise HTTPException(status_code=404, detail="data.json not found. Run a scan first.")
+    return {
+        "latestProducts": [],
+        "changes": [],
+        "stats": {
+            "lastScanTime": None,
+            "totalProductsScraped": 0,
+            "monitoredCompetitorCount": 0,
+            "monitoredUrlCount": 0,
+            "totalChangesDetected": 0,
+            "priceChangeCount": 0,
+            "messagingChangeCount": 0,
+            "failedScans": 0,
+            "successRatePercent": 100.0,
+            "netSkuDelta": 0,
+            "alertsSentToday": 0
+        },
+        "sitesConfig": []
+    }
 
 
 @app.post("/api/scan", dependencies=[Depends(verify_api_key)])
