@@ -87,8 +87,8 @@ async def run_scan(log_fn=None) -> Dict[str, Any]:
                 site_groups[site_name] = []
             site_groups[site_name].append(url_record)
 
-        # Run sites concurrently with a semaphore of max 2 concurrent sites
-        sem = asyncio.Semaphore(2)
+        # Run sites sequentially (1 at a time) to stay within free tier RAM limits (512MB)
+        sem = asyncio.Semaphore(1)
 
         async def scan_site(site_name: str, site_urls: List[Dict[str, Any]]):
             async with sem:
